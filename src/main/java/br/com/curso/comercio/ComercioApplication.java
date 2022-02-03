@@ -42,7 +42,7 @@ public class ComercioApplication implements CommandLineRunner {
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 
 		repoCategoria.saveAll(Arrays.asList(cat1, cat2));
-		repoProduto.saveAll(Arrays.asList(p1, p2, p3));
+		repoProduto.saveAll(Arrays.asList(p1, p2, p3)); 
 
 	}
 }
