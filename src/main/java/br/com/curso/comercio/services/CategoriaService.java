@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.curso.comercio.domain.Categoria;
 import br.com.curso.comercio.repositories.CategoriaRepository;
 import br.com.curso.comercio.services.exceptions.ObjetoNaoEncontrado;
-import javassist.tools.rmi.ObjectNotFoundException;
+
 
 @Service
 public class CategoriaService {
