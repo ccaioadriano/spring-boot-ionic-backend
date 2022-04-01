@@ -32,8 +32,7 @@ public enum EstadoPagamento {
 
 			if (codigoPagamento.equals(x.getCodigo())) {
 				return x;
-			} 
-
+			}
 		}
 		throw new IllegalArgumentException("Id inválido: " + codigoPagamento);
 	}
