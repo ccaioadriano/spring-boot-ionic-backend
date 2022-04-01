@@ -1,7 +1,6 @@
 package br.com.curso.comercio;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import br.com.curso.comercio.domain.Cidade;
 import br.com.curso.comercio.domain.Cliente;
 import br.com.curso.comercio.domain.Endereco;
 import br.com.curso.comercio.domain.Estado;
+import br.com.curso.comercio.domain.ItemPedido;
 import br.com.curso.comercio.domain.Pagamento;
 import br.com.curso.comercio.domain.PagamentoComBoleto;
 import br.com.curso.comercio.domain.PagamentoComCartao;
@@ -26,6 +26,7 @@ import br.com.curso.comercio.repositories.CidadeRepository;
 import br.com.curso.comercio.repositories.ClienteRepository;
 import br.com.curso.comercio.repositories.EnderecoRepository;
 import br.com.curso.comercio.repositories.EstadoRepository;
+import br.com.curso.comercio.repositories.ItemPedidoRepository;
 import br.com.curso.comercio.repositories.PagamentoRepository;
 import br.com.curso.comercio.repositories.PedidoRepository;
 import br.com.curso.comercio.repositories.ProdutoRepository;
@@ -50,12 +51,15 @@ public class ComercioApplication implements CommandLineRunner {
 
 	@Autowired
 	ClienteRepository repoCliente;
-	
+
 	@Autowired
 	PedidoRepository repoPedido;
-	
+
 	@Autowired
 	PagamentoRepository repoPagamento;
+	
+	@Autowired
+	ItemPedidoRepository repoItemPedido;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ComercioApplication.class, args);
@@ -118,11 +122,24 @@ public class ComercioApplication implements CommandLineRunner {
 		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("28/03/2022 12:00"),
 				null);
 		ped2.setPagamento(pagto2);
-		
+
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-		
+
 		repoPedido.saveAll(Arrays.asList(ped1, ped2));
 		repoPagamento.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		repoItemPedido.saveAll(Arrays.asList(ip1,ip2,ip3));
 
 	}
 }
