@@ -10,7 +10,6 @@ import br.com.curso.comercio.domain.Categoria;
 import br.com.curso.comercio.repositories.CategoriaRepository;
 import br.com.curso.comercio.services.exceptions.ObjetoNaoEncontrado;
 
-
 @Service
 public class CategoriaService {
 
@@ -31,6 +30,11 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjetoNaoEncontrado(
 				"Objeto não encontrado! Id: " + id + ", tipo do objeto: " + Categoria.class.getName()));
 
+	}
+	
+	public Categoria insert(Categoria categoria) {
+		categoria.setId(null);
+		return repo.save(categoria);
 	}
 
 }
