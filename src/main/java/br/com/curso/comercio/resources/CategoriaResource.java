@@ -30,7 +30,7 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> buscarCategoria(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> buscarCategoria(@PathVariable Integer id) {
 		Categoria obj = service.buscarPorId(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -42,5 +42,12 @@ public class CategoriaResource {
 				.path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> autalizarCategoria(@RequestBody Categoria categoria, @PathVariable Integer id){
+		categoria.setId(id);
+		categoria = service.update(categoria);
+		return ResponseEntity.noContent().build();
 	}
 }
