@@ -100,7 +100,6 @@ public class Pedido implements Serializable {
 		return itens;
 	}
 
-	/* Confirmar se está certo */
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}

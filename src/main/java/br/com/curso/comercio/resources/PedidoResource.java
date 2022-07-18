@@ -1,6 +1,7 @@
 package br.com.curso.comercio.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.curso.comercio.domain.Pedido;
+import br.com.curso.comercio.dto.PedidoDTO;
 import br.com.curso.comercio.services.PedidoService;
 
 @RestController
@@ -18,11 +20,13 @@ public class PedidoResource {
 
 	@Autowired
 	PedidoService service;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Pedido>> listarCategorias() {
+	public ResponseEntity<List<PedidoDTO>> listarCategorias() {
 		List<Pedido> lista = service.listarPedidos();
-		return ResponseEntity.ok().body(lista);
+
+		List<PedidoDTO> listaDTO = lista.stream().map(pedido -> new PedidoDTO(pedido)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDTO);
 
 	}
 
